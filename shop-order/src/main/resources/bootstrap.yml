@@ -1,0 +1,50 @@
+server:
+  port: 8091
+  tomcat:
+    # 这里调小tomcat最大线程池数量,来做测试
+    max-threads: 10
+spring:
+  application:
+    name: service-order
+  datasource:
+    name: vue-admin
+    url: jdbc:mysql://127.0.0.1:3306/vue-admin?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: chryl
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+# nacos
+  main:
+    allow-bean-definition-overriding: true  #springBoot 2.1 需要设定,防止重复
+  cloud:
+      nacos:
+        # 服务发现
+        discovery:
+          server-addr: 127.0.0.1:8848
+          namespace: c4c88d73-28c3-4978-ac2f-742ef2e30daf
+          cluster-name: CHRALIBABA
+        # 配置管理
+        config:
+          server-addr: 127.0.0.1:8848
+          file-extension: yaml
+          namespace: c4c88d73-28c3-4978-ac2f-742ef2e30daf
+          group: CHRALIBABA
+# sentinel: 注意sentinel为懒加载模式
+      sentinel:
+        transport:
+          port: 9999  # 跟控制台交流的端口,随意指定一个未使用的端口即可
+          dashboard: localhost:8080  # 指定sentinel控制台运行jar的地址
+# 是否收敛链路流控规则,进行手动关闭收敛,默认为收敛true
+#        filter:
+#          enabled: false
+
+# ribbon 负载均衡修改
+service-goods:  #服务提供者的名称!!注意是服务提供者
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
