@@ -1,5 +1,6 @@
 package com.chryl.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.chryl.client.GoodsClient;
 import com.chryl.po.ChrGoods;
 import com.chryl.po.ChrOrder;
@@ -28,9 +29,9 @@ public class OrderController2 {
     @Autowired
     private GoodsClient goodsClient;
 
-    //注入资源
-    @Autowired
-    private OrderService2 orderService2;
+    //注入资源,配置链路流控
+//    @Autowired
+//    private OrderService2 orderService2;
 
 
     @PostMapping("/goods/{goodsid}")
@@ -70,13 +71,22 @@ public class OrderController2 {
     //测试高并发
     @GetMapping("/message1")
     public String message() {
-        orderService2.message();
+//        orderService2.message();//链路流控
         return "测试高并发11";
     }
 
     @GetMapping("/message2")
     public String message2() {
-        orderService2.message();
+//        orderService2.message();//链路流控
         return "测试高并发2222222";
     }
+
+    //热点规则
+    @SentinelResource("message")//注意定义资源,在sentinel-dashboard进行配置
+    @GetMapping("/message3")
+    public String message3(String name, Integer age) {
+        return "测试高并发3" + name + age;
+    }
+
+
 }
