@@ -5,6 +5,7 @@ import com.chryl.client.GoodsClient;
 import com.chryl.service.OrderService;
 import com.chryl.po.ChrGoods;
 import com.chryl.po.ChrOrder;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -72,6 +73,16 @@ public class OrderController {
          * 使用feign 调用远程服务
          */
         ChrGoods chrGoods = goodsClient.getGoodsInfo(goodsid);
+
+        /**
+         * feign进入容错逻辑: 容错后执行的逻辑
+         */
+        if (chrGoods.getGoodsId() == -100) {//发生容错了,直接进行容错处理
+            ChrOrder chrOrder = new ChrOrder();
+            chrOrder.setOid(-100);
+            chrOrder.setUsername("下单失败");
+            return chrOrder;
+        }
 
         ChrOrder chrOrder = new ChrOrder();
         chrOrder.setUid(1);

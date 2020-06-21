@@ -48,3 +48,8 @@ spring:
 service-goods:  #服务提供者的名称!!注意是服务提供者
   ribbon:
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+# feign 整合sentinel ,开启feign对sentinel的支持
+feign:
+  sentinel:
+    enabled: true
