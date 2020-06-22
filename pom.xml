@@ -33,7 +33,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
+        <!-- RELEASE 为发行版本,建议使用 -->
+        <!--<spring-cloud.version>Greenwich.SR2</spring-cloud.version>-->
+        <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
         <spring-cloud-alibaba.version>2.1.0.RELEASE</spring-cloud-alibaba.version>
         <!-- 该版本的sentinel为1.7.0版本的,
         可以修改是否收敛链路流控规则,默认是收敛的为true
