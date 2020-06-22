@@ -54,7 +54,7 @@ public class ExceptionHandlerPage implements UrlBlockHandler {
         }
         //这里为了方便页面查看,写回到页面,正常直接抛出自定义异常就好,由全局异常捕获
         response.setContentType("application/json;charset=utf-8");//防止中文乱码
-        response.getWriter().write(JSON.toJSONString(responseData));//返回页面
+        response.getWriter().write(JSON.toJSONString(responseData));//返回页面样式为json格式
 
     }
 }
