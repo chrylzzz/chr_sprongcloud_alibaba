@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 授权规则的配置:
- * 如何区分来源,区分什么来源可以访问服务
+ * 如何区分来源,区分什么来源可以访问服务,这里根据服务名称来区分
  * Created by Chr.yl on 2020/6/21.
  *
  * @author Chr.yl
