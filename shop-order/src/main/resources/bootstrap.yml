@@ -51,7 +51,7 @@ service-goods:  #服务提供者的名称!!注意是服务提供者
   ribbon:
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
 
-# feign 整合sentinel ,开启feign对sentinel的支持
+# feign 整合sentinel ,开启feign对sentinel的支持(Feign 调用做限流),这样的话就可以把流控先知道feign了
 feign:
   sentinel:
     enabled: true
