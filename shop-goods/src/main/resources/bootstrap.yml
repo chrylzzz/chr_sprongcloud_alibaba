@@ -1,5 +1,7 @@
 server:
   port: 8081
+#  servlet:
+#    context-path: /service-goods  # 这里写项目路由的前缀,其实也很方便,这样配置 api-gateway 就不用StripPrefix去掉前一层路由了
 spring:
   application:
     name: service-goods

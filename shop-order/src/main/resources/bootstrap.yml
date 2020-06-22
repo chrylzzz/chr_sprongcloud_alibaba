@@ -1,8 +1,10 @@
 server:
   port: 8091
-  tomcat:
+  servlet:
+    context-path: /servic-order
+#  tomcat:
     # 这里调小tomcat最大线程池数量,来做测试
-    max-threads: 10
+#    max-threads: 10
 spring:
   application:
     name: service-order

@@ -1,0 +1,100 @@
+######################## 这里使用 普通使用 api-gateway
+#server:
+#  port: 7000
+#spring:
+#  application:
+#    name: api-gateway
+#  cloud:
+#    gateway:
+#      routes: #路由数组 [ ] ,路由就是指定当请求满足什么条件的时候 转到哪个微服务去
+#        # 这是一个路由-------------------------------------
+#        - id: goods_route #当前路由的唯一标识,没啥大用,就是唯一标识,默认是uuid
+#          uri: http://localhost:8081  #请求要转发到的地址,就是实际访问接口的路径
+#          order: 1  #路由的优先级,数字越小级别越高
+#          predicates:   #断言-条件判断-定义条件的(就是路由转发要满足的条件),就是符合该路由条件就转发到这个uri上
+#            - Path=/service-goods/** #当请求路径满足Path指定的规则是,才进行路由转发
+#          filters:  #过滤器,请求在传递过程中,可以通过过滤器对其进行一定的修改 ,一般需要修改路由才需要这个配置
+#            - StripPrefix=1 #转发之前去掉1层路径(1代表去掉前面一层路径)
+#        # 这是一个路由-------------------------------------
+#        - id: order_route
+#          uri: http://localhost:8091
+#          order: 1
+#          predicates:
+#            - Path=/servic-order/**
+#          # 仔细区分为什么不写 路由修改filter, 这里的 /servic-order 其实就是servlet.context-path,所以不需要去掉前面一层路径呀
+
+
+
+#
+# 什么是有用 StripPrefix=1 什么时候不用呢???
+#
+# 此处:使用去掉前一层: 因为 - Path=/service-goods/**   里面的  service-goods 是没用的,没有 localhost:8081/service-goods/goods/** 这个路由地址,所以要去掉
+# 访问post :  http://localhost:7000/service-goods/goods/get/2   去掉前一层路径为:   http://localhost:7000/goods/get/2
+#
+# 之前:使用了  servlet.context-path: /service-goods  ,注意前方有个 / ,这里的话就有路由 localhost:8081/service-goods/goods/**  ,所以就不需要修改路由地址
+#
+# 总结: 灵活配置 , 这里配置两个不同的路由方式, goods 配置修改路由地址, order 配置不修改路由地址.
+#
+
+
+
+######################## 这里使用 nacos 负载均衡 来使用api-gateway    --------------------啊啊啊啊啊啊-------增强版,平时使用较多
+#server:
+#  port: 7000
+#spring:
+#  application:
+#    name: api-gateway
+#  cloud:
+#    nacos:
+#      # 服务发现
+#      discovery:
+#        server-addr: 127.0.0.1:8848
+#        namespace: c4c88d73-28c3-4978-ac2f-742ef2e30daf
+#        cluster-name: CHRALIBABA
+#    gateway:
+#      discovery:
+#        locator:
+#          enabled: true   # 让gateway 可以发现nacos中的服务 ,gateway集成nacos
+#      routes:
+#        - id: goods_route
+#          uri: lb://service-goods   # lb 是指从nacos中按照名称获得微服务, lb:// 就是 遵循负载均衡策略
+#          order: 1
+#          predicates:
+#            - Path=/service-goods/**
+#          filters:
+#            - StripPrefix=1
+#        - id: order_route
+#          uri: lb://service-order
+#          order: 1
+#          predicates: # 发现问题, 为什么这样写不行? ,跟nacos集成了就不行了呢: 通过测试, service-order 两个名字 重复:即 uri和Path的service-order名字重复,可能有歧义,暂时小改一下
+#            - Path=/servic-order/**
+
+
+
+######################## 这里使用 nacos 负载均衡 来使用api-gateway    --------------啊啊啊啊啊啊-------简写版,平时使用较少少少少少少少少少少少
+server:
+  port: 7000
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    nacos:
+      # 服务发现
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: c4c88d73-28c3-4978-ac2f-742ef2e30daf
+        cluster-name: CHRALIBABA
+    gateway:
+      discovery:
+        locator:
+          enabled: true   # 让gateway 可以发现nacos中的服务 ,gateway集成nacos
+#########################为什么 可以省略路由的配置呢??  其实就是uri和Path 的名字一样了,也有- StripPrefix=1,
+####### 例如:  就是如下的配置
+#      uri: lb://service-goods
+#      predicates:
+#         - Path=/service-goods/**
+#       filters:
+#         - StripPrefix=1
+#
+# ###### 这样的话 ,也可以不加入 servlet-context-path,那么就默认使用 服务名字(spring.application.name)作为Path路径,然后默认配置了filters(StripPrefix=1),
+# ######  但是我更喜欢 配置 servlet-context-path 跟服务名称很像,然后 不写filters.

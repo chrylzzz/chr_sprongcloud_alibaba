@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>chr_sprongcloud_alibaba</artifactId>
+        <groupId>com.chryl</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>api-gateway</artifactId>
+    <description>
+        spring boot 2.x 默认支持的网关api-gateway
+        spring boot 1.x 默认支持的网关 zuul
+    </description>
+
+    <dependencies>
+        <!-- gateway网关 :此模块千万不要导入 web-starter ,会冲突,
+        因为: api-gateway 基于netty和 webflux 跟servlet不同
+        不能部署在tomcat ,jetty,servlet容器中,只能jar启动
+        -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+
+        <!-- nacos -->
+        <!--<dependency>-->
+            <!--<groupId>com.alibaba.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
+        <!--</dependency>-->
+        <!-- 如果只 api-gateway 和 nacos集成: 动态 通过服务名和 负载均衡 ,只引入 服务发现就行,如果需要 把api-gateway的配置 注册到 nacos 上,在引入 config依赖即可 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-nacos-discovery</artifactId>
+        </dependency>
+    </dependencies>
+</project>
