@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
- * --@SentinelResource 注解的解析
+ * --@SentinelResource 注解的解析:这个注解是对sentinel资源的流控,这与对服务的流控不同
  * Created by Chr.yl on 2020/6/20.
  *
  * @author Chr.yl
@@ -18,12 +18,19 @@ import org.springframework.stereotype.Service;
 public class OrderService2 {
 
     /**
+     * 注意定义这些方法的时候:参数和返回值一定要一样,但是最后一个参数可以是 BlockException Throwable 的参数
      * blockHandler :当资源内部发生了 BlockException 异常之后,要走的逻辑(就是sentinel定义的五个异常之后要走的按需求自定义逻辑),---只处理sentinel的5个路由异常
      * fallback     :当资源内部发生了 Throwable 应该进入的方法---处理不是sentinel的异常
+     * blockHandlerClass    :指定外部的BlockException异常时执行的逻辑
+     * fallbackClass    :指定外部的非BlockException异常时执行的逻辑
      */
     //定义资源,value指定资源名字,注意定义资源,在sentinel-dashboard进行配置
     @SentinelResource(
             value = "message",
+            /**
+             * 有问题,通过测试,blockHandlerClass和fallbackClass这是引入了外部类来定义容错,而如果不写blockHandler和fallback指定方法则会找不到方法,
+             * 所以需要都写上,虽然看视频是写了外部的Class就不要写本类定义的了,但是测试并不是这样的
+            */
             //本类直接定义
 //            blockHandler = "myBlockHandlerMethod",//自定义一个blockHandler方法,处理BlockException,注意,参数和返回值必须和定义所在的方法一样
 //            fallback = "myFallbackMethod",//自定义处理Throwable异常
@@ -38,7 +45,7 @@ public class OrderService2 {
     /**
      * blockHandler方法定义规则:
      * 这就是定义的blockHandler//注意返回值和参数与原方法一致
-     * 但是允许在参数最后加入一个BlockException参数 ,用来接收方法发生的异常
+     * 但是允许在参数最后加入一个 BlockException 参数 ,用来接收方法发生的异常
      *
      * @return
      */
@@ -53,7 +60,7 @@ public class OrderService2 {
     /**
      * fallback方法定义规则:
      * 这就是定义的fallback//注意返回值和参数与原方法一致
-     * 但是允许在参数最后加入一个Throwable参数 ,用来接收方法发生的异常
+     * 但是允许在参数最后加入一个 Throwable 参数 ,用来接收方法发生的异常
      *
      * @return
      */
