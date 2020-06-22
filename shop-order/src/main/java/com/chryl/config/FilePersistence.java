@@ -16,6 +16,7 @@ import com.alibaba.csp.sentinel.slots.system.SystemRuleManager;
 import com.alibaba.csp.sentinel.transport.util.WritableDataSourceRegistry;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
@@ -44,6 +45,10 @@ public class FilePersistence implements InitFunc {
          * System.getProperty("user.home") : /Users/chryl
          */
 //        String ruleDir = System.getProperty("user.home") + "/sentinel-rules/" + applicationName;
+        if (StringUtils.isBlank(applicationName)) {
+            applicationName = "goods";
+        }
+        System.err.println(applicationName);
         String ruleDir = System.getProperty("user.home") + "/develop/sentinel/sentinel-rules/" + applicationName;
         String flowRulePath = ruleDir + "/flow-rule.json";
         String degradeRulePath = ruleDir + "/degrade-rule.json";
