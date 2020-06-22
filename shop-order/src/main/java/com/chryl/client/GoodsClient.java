@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
  *
  * @author Chr.yl
  */
-@FeignClient(value = "service-goods",//value指定服务名称
-//        fallback = GoodsClientFallback.class,//fallback为该类的容错类,但是无法得到feign调用的出错信息
+@FeignClient(value = "service-goods"//value指定服务名称
+        ,//如果同时设置了feign的容错类和sentinel的资源容错类,资源的被sentinel控制,接口的被feign控制,各司其职
+//        fallback = GoodsClientFallback.class//fallback为该类的容错类,但是无法得到feign调用的出错信息
+//        ,
         fallbackFactory = GoodsClientFallbackFactory.class//feign调用的容错类,可以得到出错信息,但是用了这个,就不要用fallback了
 )
 public interface GoodsClient {
