@@ -36,8 +36,13 @@ public class OrderService {
 
     //无任何资源控制
     public ChrGoods get(Integer id) {
-        ChrGoods goodsInfo = goodsClient.getGoodsInfo(id);
-        return goodsInfo;
+        ChrGoods chrGoods = goodsClient.getGoodsInfo(id);
+        //这里feign发生容错
+        if (chrGoods.getGoodsId() == -100) {//发生容错了,直接进行容错处理
+            //feign容错逻辑
+
+        }
+        return chrGoods;
     }
 
 

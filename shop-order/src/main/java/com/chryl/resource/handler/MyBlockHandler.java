@@ -4,6 +4,7 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * sentinel资源容错:
  * 可以自定义BlockException处理的类,不用再@SentinelResource处单独定义方法,采用引用外部blockExceptionClass的方式统一处理
  * Created by Chr.yl on 2020/6/21.
  *

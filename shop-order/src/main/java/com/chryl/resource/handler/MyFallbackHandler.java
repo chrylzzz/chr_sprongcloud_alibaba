@@ -2,7 +2,9 @@ package com.chryl.resource.handler;
 
 import lombok.extern.slf4j.Slf4j;
 
-/**--@SentinelResource可以自定义 fallback 处理的类,
+/**
+ * sentinel资源容错:
+ * --@SentinelResource可以自定义 fallback 处理的类,
  * 不用再每个方法进行定义,采用引用外部blockExceptionClass的方式统一处理
  * Created by Chr.yl on 2020/6/21.
  *

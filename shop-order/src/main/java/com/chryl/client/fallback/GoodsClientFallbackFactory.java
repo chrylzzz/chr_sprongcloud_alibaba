@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * 这就是容错类而且还可以查看异常信息的容错类,你说厉害吧
+ * 这就是feign容错类而且还可以查看异常信息的容错类,你说厉害吧
  * 实现方法:FallbackFactory<T>
  * 需要实现FallbackFactory,泛型为那个类的容错类,就是泛型
  * Created by Chr.yl on 2020/6/21.
@@ -25,11 +25,11 @@ public class GoodsClientFallbackFactory implements FallbackFactory<GoodsClient> 
             @Override
             public ChrGoods getGoodsInfo(Integer id) {
                 //打印异常信息
-                log.info("异常信息为: {}", throwable);
+                log.info("feign 容错 异常信息为: {}", throwable);
                 //容错逻辑
                 ChrGoods chrGoods = new ChrGoods();
                 chrGoods.setGoodsId(-100);
-                chrGoods.setGoodsName("出错,进行容错");
+                chrGoods.setGoodsName("出错, feign进行容错");
                 return chrGoods;
             }
         };
