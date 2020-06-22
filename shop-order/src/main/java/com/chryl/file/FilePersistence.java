@@ -1,4 +1,4 @@
-package com.chryl.config;
+package com.chryl.file;
 
 import com.alibaba.csp.sentinel.command.handler.ModifyParamFlowRulesCommandHandler;
 import com.alibaba.csp.sentinel.datasource.*;

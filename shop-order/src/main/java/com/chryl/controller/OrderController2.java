@@ -1,20 +1,15 @@
 package com.chryl.controller;
 
-import com.alibaba.csp.sentinel.annotation.SentinelResource;
-import com.chryl.client.GoodsClient;
 import com.chryl.po.ChrGoods;
-import com.chryl.po.ChrOrder;
 import com.chryl.service.OrderService;
-import com.chryl.service.OrderService2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-
-import java.math.BigDecimal;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 测试并发,模拟高并发
+ * 测试限流,降级,资源控制
  * Created by Chr.yl on 2020/6/20.
  *
  * @author Chr.yl
@@ -26,67 +21,23 @@ public class OrderController2 {
     @Autowired
     private OrderService orderService;
 
-    @Autowired
-    private GoodsClient goodsClient;
-
-    //注入资源,配置链路流控
-//    @Autowired
-//    private OrderService2 orderService2;
-
-
-    @PostMapping("/goods/{goodsid}")
-    public ChrOrder order(@PathVariable Integer goodsid) {
-        ChrGoods chrGoods = goodsClient.getGoodsInfo(goodsid);
-
-        /**
-         * 模拟 商品调用需要2s的时间
-         */
-        try {
-            Thread.sleep(2000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        ChrOrder chrOrder = new ChrOrder();
-        chrOrder.setUid(1);
-        chrOrder.setUsername("admin");
-
-        chrOrder.setGoodsid(chrGoods.getGoodsId());
-        chrOrder.setGoodsprice(new BigDecimal(chrGoods.getGoodsPrice()));
-        chrOrder.setNumber(1);
-        chrOrder.setGoodsname(chrGoods.getGoodsName());
-
-
-        //防止垃圾数据
-        //orderService.createOrder(chrOrder);
-
-        try {
-            Thread.sleep(100);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return chrOrder;
+    @GetMapping("/get/{id}")
+    public ChrGoods getGoods(@PathVariable Integer id) {
+        return orderService.get(id);
     }
 
-    //测试高并发
-    @GetMapping("/message1")
-    public String message() {
-//        orderService2.message();//链路流控
-        return "测试高并发11";
+    //测试资源
+    @GetMapping("/get2/{id}")
+    public ChrGoods getGoods2(@PathVariable Integer id) {
+        //测试资源
+//        return orderService.get3(id);
+        //测试资源2
+        return orderService.get4(String.valueOf(id));
     }
 
-    @GetMapping("/message2")
-    public String message2() {
-//        orderService2.message();//链路流控
-        return "测试高并发2222222";
+    //热点流控
+    @GetMapping("/get3")
+    public ChrGoods getGoods3(String name) {
+        return orderService.get3(2);
     }
-
-    //热点规则
-    @SentinelResource("message")//注意定义资源,在sentinel-dashboard进行配置
-    @GetMapping("/message3")
-    public String message3(String name, Integer age) {
-        return "测试高并发3" + name + age;
-    }
-
-
 }

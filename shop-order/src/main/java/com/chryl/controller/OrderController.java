@@ -1,13 +1,10 @@
 package com.chryl.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.chryl.client.GoodsClient;
-import com.chryl.service.OrderService;
 import com.chryl.po.ChrGoods;
 import com.chryl.po.ChrOrder;
-import org.hibernate.criterion.Order;
+import com.chryl.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Random;
 
 /**
+ * 测试远程调用
  * Created by Chr.yl on 2020/6/20.
  *
  * @author Chr.yl

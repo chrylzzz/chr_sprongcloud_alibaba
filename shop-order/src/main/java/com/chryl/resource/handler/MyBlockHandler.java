@@ -1,4 +1,4 @@
-package com.chryl.config;
+package com.chryl.resource.handler;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import lombok.extern.slf4j.Slf4j;

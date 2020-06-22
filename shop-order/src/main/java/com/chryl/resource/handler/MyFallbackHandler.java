@@ -1,4 +1,4 @@
-package com.chryl.config;
+package com.chryl.resource.handler;
 
 import lombok.extern.slf4j.Slf4j;
 
