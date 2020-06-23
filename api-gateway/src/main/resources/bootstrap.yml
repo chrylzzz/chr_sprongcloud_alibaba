@@ -42,6 +42,14 @@
 server:
   port: 7000
 spring:
+  # 配置 zipkin
+  zipkin:
+    base-url: http://127.0.0.1:9411/   # zipkin server的请求地址,通过改地址推送链路数据
+    discovery-client-enabled: false   # 让 nacos 把它当成一个URL地址,而不要当成服务名
+  #  配置 sleuth
+  sleuth:
+    sampler:
+      probability: 1.0  # 采样的百分比 , 并不是所有的数据都要推送,测试时 为1
   application:
     name: api-gateway
   cloud:
