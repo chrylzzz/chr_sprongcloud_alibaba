@@ -3,10 +3,7 @@ package com.chryl.controller;
 import com.chryl.po.ChrGoods;
 import com.chryl.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 测试限流,降级,资源控制
@@ -39,5 +36,11 @@ public class OrderController2 {
     @GetMapping("/get3")
     public ChrGoods getGoods3(String name) {
         return orderService.get3(2);
+    }
+
+    //测试自定义断言
+    @GetMapping("/get4")
+    public String getAge(@RequestParam("age") String age) {
+        return "success";
     }
 }

@@ -39,39 +39,6 @@
 
 
 ######################## 这里使用 nacos 负载均衡 来使用api-gateway    --------------------啊啊啊啊啊啊-------增强版,平时使用较多
-#server:
-#  port: 7000
-#spring:
-#  application:
-#    name: api-gateway
-#  cloud:
-#    nacos:
-#      # 服务发现
-#      discovery:
-#        server-addr: 127.0.0.1:8848
-#        namespace: c4c88d73-28c3-4978-ac2f-742ef2e30daf
-#        cluster-name: CHRALIBABA
-#    gateway:
-#      discovery:
-#        locator:
-#          enabled: true   # 让gateway 可以发现nacos中的服务 ,gateway集成nacos
-#      routes:
-#        - id: goods_route
-#          uri: lb://service-goods   # lb 是指从nacos中按照名称获得微服务, lb:// 就是 遵循负载均衡策略
-#          order: 1
-#          predicates:
-#            - Path=/service-goods/**
-#          filters:
-#            - StripPrefix=1
-#        - id: order_route
-#          uri: lb://service-order
-#          order: 1
-#          predicates: # 发现问题, 为什么这样写不行? ,跟nacos集成了就不行了呢: 通过测试, service-order 两个名字 重复:即 uri和Path的service-order名字重复,可能有歧义,暂时小改一下
-#            - Path=/servic-order/**
-
-
-
-######################## 这里使用 nacos 负载均衡 来使用api-gateway    --------------啊啊啊啊啊啊-------简写版,平时使用较少少少少少少少少少少少
 server:
   port: 7000
 spring:
@@ -88,6 +55,54 @@ spring:
       discovery:
         locator:
           enabled: true   # 让gateway 可以发现nacos中的服务 ,gateway集成nacos
+      routes:
+        - id: goods_route
+          uri: lb://service-goods   # lb 是指从nacos中按照名称获得微服务, lb:// 就是 遵循负载均衡策略
+          order: 1
+          predicates:
+            - Path=/service-goods/**
+          filters:
+            - StripPrefix=1
+        - id: order_route
+          uri: lb://service-order
+          order: 1
+          filters:
+#过滤器:局部过滤器,全局过滤器直接在配置类配置即可###########################
+          # 测试内部局部过滤器
+#            - SetStatus=250 #自定义状态码
+          # 自定义局部过滤器 ,控制日志是否开启
+#            - Log=true,false
+################################################
+          predicates: # 断言 发现问题, 为什么这样写不行? ,跟nacos集成了就不行了呢: 通过测试, service-order 两个名字 重复:即 uri和Path的service-order名字重复,可能有歧义,暂时小改一下
+            - Path=/servic-order/**
+#断言:内置和自定义断言工厂###############################################
+            # 测试 内置断言
+#            - Before=2020-07-23T09:42:44.761+08:00  # 请求必须早于的时间
+#            - Method=GET  # 请求必须是GET请求
+            # 测试 自定义断言 : age 在 18-60 的才能访问
+#            - Age=18,60
+################################################
+
+
+
+
+######################## 这里使用 nacos 负载均衡 来使用api-gateway    --------------啊啊啊啊啊啊-------简写版,平时使用较少少少少少少少少少少少
+#server:
+#  port: 7000
+#spring:
+#  application:
+#    name: api-gateway
+#  cloud:
+#    nacos:
+#      # 服务发现
+#      discovery:
+#        server-addr: 127.0.0.1:8848
+#        namespace: c4c88d73-28c3-4978-ac2f-742ef2e30daf
+#        cluster-name: CHRALIBABA
+#    gateway:
+#      discovery:
+#        locator:
+#          enabled: true   # 让gateway 可以发现nacos中的服务 ,gateway集成nacos
 #########################为什么 可以省略路由的配置呢??  其实就是uri和Path 的名字一样了,也有- StripPrefix=1,
 ####### 例如:  就是如下的配置
 #      uri: lb://service-goods
