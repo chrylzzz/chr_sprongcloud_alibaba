@@ -103,7 +103,7 @@ public class GatewayConfiguration {
 
     }
 
-    //------------------------------------------自定义API分组维度----------------------------------------------------------
+    //------------------------------------------自定义API分组维度:粒度更细--------------------------------------------
 
     //配置初始化的限流参数 ,就是限流的sentinel配置
     @PostConstruct
@@ -111,7 +111,7 @@ public class GatewayConfiguration {
         Set<GatewayFlowRule> rules = new HashSet<>();
         //配置需要限流的微服务
         rules.add(
-                new GatewayFlowRule("odd_api1")
+                new GatewayFlowRule("odd_api1")//这里的资源为ApiDefinition定义的资源名字
                         .setCount(1)//阈值
                         .setIntervalSec(5)//时间窗口
         );
@@ -131,7 +131,7 @@ public class GatewayConfiguration {
                 .setPredicateItems(new HashSet<ApiPredicateItem>() {{//设置规则
                     //以 /servic-order/odd/api1 开头的请求
                     add(new ApiPathPredicateItem()
-                            .setPattern("/servic-order/odd/api1/**")//哪个地址,这里的地址是配置文件的url的地址
+                            .setPattern("/servic-order/odd/api1/**")//哪个地址,这里的地址是配置文件的url的地址,注意这里的地址,需要加上predicates里的路由断言
                             .setMatchStrategy(SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX)//路由策略,就是以**前面的为开头
                     );
                     //add(); //可以设置多个规则
@@ -140,7 +140,7 @@ public class GatewayConfiguration {
                 .setPredicateItems(new HashSet<ApiPredicateItem>() {{
                     //以 /servic-order/odd/api2/demo 完全匹配的路径
                     add(new ApiPathPredicateItem()
-                            .setPattern("/servic-order/odd/api2/demo")//哪个地址
+                            .setPattern("/servic-order/odd/api2/demo")////哪个地址,这里的地址是配置文件的url的地址,注意这里的地址,需要加上predicates里的路由断言
                     );
                 }});
         definitions.add(api1);
