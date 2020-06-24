@@ -15,7 +15,7 @@ import java.util.function.Predicate;
  * 自定义断言工厂 : 用来限制 age 18-60 才能访问  , 自己书写时,参照人家的格式即可 如:BeforeRoutePredicateFactory
  * 注意:
  * 1.自定义的断言构造器 Xxx + RoutePredicateFactory 名字必须是这个格式 , Xxx为配置文件定义的名字 ,否则不与识别
- * 2.必须继承extends AbstractRoutePredicateFactory<T>   泛型 就是配置类
+ * 2.必须继承extends AbstractRoutePredicateFactory<T>   泛型 就是配置类的Config类(该类里的Config类为静态)
  * Created by Chr.yl on 2020/6/23.
  *
  * @author Chr.yl

@@ -55,7 +55,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         String token = exchange.getRequest().getHeaders().getFirst("Authorization");
 //        String token = request.getQueryParams().getFirst("token");//从参数中获得token
         if (StringUtils.isBlank(token) ||
-                !StringUtils.equals("admin", token)) {//认证失败
+                !StringUtils.equals("admin", token)) {//测试认证失败
             log.info("认证失败...");
             ServerHttpResponse response = exchange.getResponse();
             response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
