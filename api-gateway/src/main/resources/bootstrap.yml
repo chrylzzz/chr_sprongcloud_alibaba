@@ -65,7 +65,7 @@ spring:
           enabled: true   # 让gateway 可以发现nacos中的服务 ,gateway集成nacos
       routes:
         - id: goods_route
-          uri: lb://service-goods   # lb 是指从nacos中按照名称获得微服务, lb:// 就是 遵循负载均衡策略
+          uri: lb://service-goods   # lb 是指从nacos中按照名称获得微服务, lb:// 就是 遵循负载均衡策略 loadBalance
           order: 1
           predicates:
             - Path=/service-goods/**

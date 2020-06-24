@@ -75,7 +75,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-sleuth</artifactId>
         </dependency>
-        <!-- zipkin 客户端 -->
+        <!-- zipkin 客户端 : 与sleuth 集成.集成图形化界面,数据存储(mysql和es等)  -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-zipkin</artifactId>
