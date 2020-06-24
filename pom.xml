@@ -67,7 +67,7 @@
         </dependencies>
     </dependencyManagement>
 
-    <dependencies>
+    <dependencies><!-- 注意 sleuth 和 zipkin 每个模块都要集成 -->
         <!-- sleuth: 链路追踪,注意这里只在日志中收集聚合了信息,
             通常集成Zipkin的ui界面来使用
          -->
