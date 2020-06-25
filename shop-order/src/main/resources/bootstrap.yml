@@ -65,3 +65,9 @@ service-goods:  #服务提供者的名称!!注意是服务提供者
 feign:
   sentinel:
     enabled: true
+
+# rocketMq 配置
+rocketmq:
+  name-server: 192.168.228.128:9876  # mq服务地址
+  producer:
+    group: order-group # 订单生产者组
