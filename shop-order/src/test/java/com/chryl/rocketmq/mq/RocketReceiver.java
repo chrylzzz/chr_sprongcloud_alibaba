@@ -1,4 +1,4 @@
-package com.chryl.mq;
+package com.chryl.rocketmq.mq;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;

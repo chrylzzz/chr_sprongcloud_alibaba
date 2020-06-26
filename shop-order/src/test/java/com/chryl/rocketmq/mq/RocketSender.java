@@ -1,4 +1,4 @@
-package com.chryl.mq;
+package com.chryl.rocketmq.mq;
 
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
@@ -19,6 +19,7 @@ public class RocketSender {
         DefaultMQProducer producer = new DefaultMQProducer("chryl-group");
         //生产者设置name server
         producer.setNamesrvAddr("192.168.228.128:9876");
+        producer.setVipChannelEnabled(false);
 
         //启动生产者
         producer.start();
