@@ -46,4 +46,7 @@ public class ChrUser implements Serializable {
 
     @Column(name = "avatar")
     private String avatar;//头像
+
+    @Column(name = "phone")
+    private String phone;
 }

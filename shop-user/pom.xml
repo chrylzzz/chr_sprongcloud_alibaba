@@ -45,6 +45,10 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-alibaba-nacos-discovery</artifactId>
         </dependency>
-
+        <!-- aliyun sms 短信服务 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alicloud-sms</artifactId>
+        </dependency>
     </dependencies>
 </project>
