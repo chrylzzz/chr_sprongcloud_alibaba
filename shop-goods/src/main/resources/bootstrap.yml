@@ -42,3 +42,12 @@ spring:
           file-extension: yaml
           namespace: c4c88d73-28c3-4978-ac2f-742ef2e30daf
           group: CHRALIBABA
+          # 这里是 nacos - seata  的配置
+          ext-config[0]:
+#            namespace: PUBLIC  # 这里把seata 的配置配置到 相同的配置里去
+            group: SEATA_GROUP
+            refresh: true #开启动态刷新
+      alibaba:
+        seata:
+          tx-service-group: ${spring.application.name}  # 这里的 group 组与 srata配置里的 nacos-config.txt  相同
+

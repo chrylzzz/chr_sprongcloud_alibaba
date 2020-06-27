@@ -41,4 +41,7 @@ public class ChrGoods {
 
     @Column(name = "goods_desc")
     private String goodsDesc;
+
+    @Column(name = "goods_stock")
+    private Integer goodsStock;
 }

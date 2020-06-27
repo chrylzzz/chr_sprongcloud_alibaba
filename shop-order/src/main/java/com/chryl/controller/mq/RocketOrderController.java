@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 
 /**
- * 测试rocketmq
+ * 测试rocketmq,下单
  * Created by Chr.yl on 2020/6/25.
  *
  * @author Chr.yl

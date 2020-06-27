@@ -1,15 +1,10 @@
 package com.chryl.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.chryl.po.ChrGoods;
 import com.chryl.service.GoodsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Chr.yl on 2020/6/20.
@@ -30,5 +25,12 @@ public class GoodsController {
         ChrGoods chrGoods = goodsService.findById(id);
         log.info("run~");
         return chrGoods;
+    }
+
+    //扣库存
+    @PostMapping("/reduce")
+    public void reduceInventory(@RequestParam("goodsId") Integer goodsId,
+                                @RequestParam("number") Integer number) {
+        goodsService.reduceInventory(goodsId, number);
     }
 }

@@ -18,8 +18,8 @@ public class RocketSender {
         //创建生产者
         DefaultMQProducer producer = new DefaultMQProducer("chryl-group");
         //生产者设置name server
-//        producer.setNamesrvAddr("192.168.228.128:9876");
-        producer.setNamesrvAddr("127.0.0.1:9876");
+        producer.setNamesrvAddr("47.104.169.13:9876");
+//        producer.setNamesrvAddr("127.0.0.1:9876");
 //        producer.setVipChannelEnabled(false);
 
         //启动生产者

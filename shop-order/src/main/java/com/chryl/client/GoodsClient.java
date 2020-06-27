@@ -6,6 +6,7 @@ import com.chryl.po.ChrGoods;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by Chr.yl on 2020/6/20.
@@ -23,4 +24,9 @@ public interface GoodsClient {
     //@FeignClient的value + @PostMapping("/goods/get/{id}")  就是一个完整的路径
     @PostMapping("/goods/get/{id}")
     ChrGoods getGoodsInfo(@PathVariable("id") Integer id);
+
+
+    @PostMapping("/goods/reduce")
+    void reduceInventory(@RequestParam("goodsId") Integer goodsId,
+                         @RequestParam("number") Integer number);
 }
