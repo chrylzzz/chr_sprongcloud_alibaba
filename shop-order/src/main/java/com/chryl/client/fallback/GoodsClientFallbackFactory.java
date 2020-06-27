@@ -32,6 +32,11 @@ public class GoodsClientFallbackFactory implements FallbackFactory<GoodsClient> 
                 chrGoods.setGoodsName("出错, feign进行容错");
                 return chrGoods;
             }
+
+            @Override
+            public void reduceInventory(Integer goodsId, Integer number) {
+                log.info("feign(reduceInventory) 容错 异常信息为: {}", throwable);
+            }
         };
     }
 }

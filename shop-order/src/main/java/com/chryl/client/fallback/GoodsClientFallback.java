@@ -23,4 +23,9 @@ public class GoodsClientFallback implements GoodsClient {
         chrGoods.setGoodsName("出错,进行容错");
         return chrGoods;
     }
+
+    @Override
+    public void reduceInventory(Integer goodsId, Integer number) {
+        System.out.println("这是 reduceInventory 的容错异常 ");
+    }
 }
