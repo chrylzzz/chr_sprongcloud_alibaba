@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 /**
+ * seata 分布式事务
  * Created by Chr.yl on 2020/6/27.
  *
  * @author Chr.yl
@@ -33,7 +34,13 @@ public class SeataService {
     private RocketMQTemplate rocketMQTemplate;
 
 
-    @GlobalTransactional//seata 分布式事务
+    /**
+     * 这里有一个问题, 就是 goodsClient 如果设置了 fallback ,那么seata就会认为它并没有出错误,就不会回滚
+     *
+     * @param id
+     * @return
+     */
+    @GlobalTransactional//seata 分布式事务 ,先生成订单,在扣减库存,下单时并不发生错误,扣减库存时出错
     public ChrOrder createSeataOrder(Integer id) {
         log.info("查询商品信息");
         //获取商品信息
@@ -48,7 +55,7 @@ public class SeataService {
         chrOrder.setUid(1);
         chrOrder.setUsername("chryl");
         chrOrder.setGoodsname(goodsInfo.getGoodsName());
-        chrOrder.setOid(goodsInfo.getGoodsId());
+        chrOrder.setGoodsid(goodsInfo.getGoodsId());
         chrOrder.setNumber(1);
         chrOrder.setGoodsprice(new BigDecimal(goodsInfo.getGoodsPrice()));
         //下单

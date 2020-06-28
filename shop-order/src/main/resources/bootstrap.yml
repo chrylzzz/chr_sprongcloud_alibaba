@@ -39,17 +39,15 @@ spring:
           server-addr: 127.0.0.1:8848
           namespace: c4c88d73-28c3-4978-ac2f-742ef2e30daf
           cluster-name: CHRALIBABA
-        # 配置管理
+        # 配置管理  这里是 nacos - seata  的配置 ,读取 seats在nacos的配置信息
         config:
           server-addr: 127.0.0.1:8848
-          file-extension: yaml
-          namespace: c4c88d73-28c3-4978-ac2f-742ef2e30daf
-          group: CHRALIBABA
-         # 这里是 nacos - seata  的配置
-          ext-config[0]:
-#            namespace: PUBLIC  # 这里把seata 的配置配置到 相同的配置里去
-            group: SEATA_GROUP
-            refresh: true #开启动态刷新
+          namespace: PUBLIC
+          group: SEATA_GROUP
+#      # seata 配置
+#spring.cloud.alibaba.seata.tx-service-group ：这里是我们之前在修改 Seata Server 端配置文件
+#nacos-config.txt 时里面配置的 service.vgroup_mapping.${your-service-gruop}=default 中间的 ${your-service-gruop} 。
+#这两处配置请务必一致，否则在启动工程后会一直报错 no available server to connect 。
       alibaba:
         seata:
           tx-service-group: ${spring.application.name}  # 这里的 group 组与 srata配置里的 nacos-config.txt  相同

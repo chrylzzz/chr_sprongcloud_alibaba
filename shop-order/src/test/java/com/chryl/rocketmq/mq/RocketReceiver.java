@@ -21,7 +21,6 @@ public class RocketReceiver {
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("chryl-group");
         //为消费者设置 nameserver
         consumer.setNamesrvAddr("192.168.228.128:9876");
-//        consumer.setNamesrvAddr("127.0.0.1:9876");
 
         //设置订阅的 主题和标签
         consumer.subscribe("myTopic", "*");

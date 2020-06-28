@@ -6,13 +6,8 @@ import com.chryl.dao.UserDao;
 import com.chryl.po.ChrOrder;
 import com.chryl.po.ChrUser;
 import com.chryl.util.SmsUtil;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.text.StrBuilder;
-import org.apache.rocketmq.spring.annotation.ConsumeMode;
-import org.apache.rocketmq.spring.annotation.MessageModel;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +23,7 @@ import java.util.Random;
  * @author Chr.yl
  */
 @Slf4j
-@Service("shopSmsService")//SmsService被alibaba使用了
+@Service("shopSmsService")//SmsService对象名被alibaba使用了
 @RocketMQMessageListener(
         consumerGroup = "user-group",//消费者组名
         topic = "order-topic"//,//消费的主题
@@ -62,14 +57,14 @@ public class SmsService implements RocketMQListener<ChrOrder> {
         }
     }
 
-    //短信内部类
+    //短信参数内部类
     @Data
     class Param {
         private String code;
 
         public Param() {
             StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 6; i++) {//自定义短信码
                 stringBuilder.append(new Random().nextInt(9) + 1);
             }
             this.code = stringBuilder.toString();

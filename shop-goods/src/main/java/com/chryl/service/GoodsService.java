@@ -31,7 +31,7 @@ public class GoodsService {
         //扣库存
         chrGoods.setGoodsStock(chrGoods.getGoodsStock() - number);
 
-        //模拟异常
+        //手动模拟异常 , 测试 seata 分布式事务
         int i = 1 / 0;
 
         goodsDao.save(chrGoods);

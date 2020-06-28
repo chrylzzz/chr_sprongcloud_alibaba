@@ -37,7 +37,7 @@ public class RocketOrderController {
     GoodsClient goodsClient;
 
     /**
-     * 普通消息
+     * 普通消息,发送mq ,用户微服务接收消息,发送短信Sms服务
      *
      * @param id
      * @return
@@ -56,8 +56,8 @@ public class RocketOrderController {
         chrOrder.setUid(1);
         chrOrder.setUsername("chryl");
         chrOrder.setGoodsname(goodsInfo.getGoodsName());
-        chrOrder.setOid(goodsInfo.getGoodsId());
         chrOrder.setNumber(1);
+        chrOrder.setGoodsid(goodsInfo.getGoodsId());
         chrOrder.setGoodsprice(new BigDecimal(goodsInfo.getGoodsPrice()));
         //下单
         orderService.createOrder(chrOrder);
@@ -72,7 +72,13 @@ public class RocketOrderController {
     private MqService mqService;
 
     /**
-     * 事务消息测试!!!!!!!!!!!
+     * 重点!!====对应-rocketmq-不同类型的消息-事务消息
+     * 事务消息测试(
+     * 1.发送半事务消息到topic,
+     * 2.判断发送成功,
+     * 3.监听半事务消息topic,接收消息后,调用本地事务,
+     * 4.成功结束,不成功调用消息回查机制重新实现回滚
+     * )!!!!!!!!!!!
      */
     @GetMapping("/tx/get/{id}")
     public Object show_tx(@PathVariable("id") Integer id) {

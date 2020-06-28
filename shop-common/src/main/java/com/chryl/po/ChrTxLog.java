@@ -2,7 +2,9 @@ package com.chryl.po;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 
 /**
@@ -15,7 +17,10 @@ import java.util.Date;
 @Data
 public class ChrTxLog {
 
+    @Id
+    @Column(name = "tx_id")
     private String txId;
 
+    @Column(name = "date")
     private Date date;
 }

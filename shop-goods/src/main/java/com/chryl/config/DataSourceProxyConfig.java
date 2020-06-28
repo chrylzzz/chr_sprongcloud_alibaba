@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 /**
+ * 该代理数据源,可以进行事务回滚操作
  * seata 分布式事务,通过数据源实现,需要配置 druid 的 bean
  * Created by Chr.yl on 2020/6/27.
  *
