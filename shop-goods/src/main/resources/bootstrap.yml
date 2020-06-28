@@ -41,7 +41,7 @@ spring:
           server-addr: 127.0.0.1:8848
           namespace: PUBLIC
           group: SEATA_GROUP
-#      # seata 配置
+#      # seata 配置 , 需要与seata的配置相对应
       alibaba:
         seata:
           tx-service-group: ${spring.application.name}  # 这里的 group 组与 srata配置里的 nacos-config.txt  相同

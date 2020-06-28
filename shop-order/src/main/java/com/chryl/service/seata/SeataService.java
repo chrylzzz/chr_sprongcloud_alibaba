@@ -35,7 +35,7 @@ public class SeataService {
 
 
     /**
-     * 这里有一个问题, 就是 goodsClient 如果设置了 fallback ,那么seata就会认为它并没有出错误,就不会回滚
+     * 这里有一个问题, 就是 feign 的 goodsClient 如果设置了 fallback ,那么seata就会认为它并没有出错误,就不会回滚
      *
      * @param id
      * @return

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
+ * feign 配置了fallback seata就 不认为服务发生错误
  * Created by Chr.yl on 2020/6/20.
  *
  * @author Chr.yl
