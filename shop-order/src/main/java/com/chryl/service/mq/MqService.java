@@ -40,7 +40,7 @@ public class MqService {
         //该 id 需要 贯穿传递
         String txId = UUID.randomUUID().toString().replaceAll("-", "");
 
-        //第一步:发送半事务消息
+        //第一步:发送半事务消息,既能回滚的消息
         TransactionSendResult sendResult = rocketMQTemplate.sendMessageInTransaction(
                 "tx_producer_group",//txProducerGroup 事务生产者组名,与@RocketMQTransactionListener 的txProducerGroup对应
                 "tx_order_topic",//主题
@@ -48,7 +48,7 @@ public class MqService {
                 chrOrder//参数
         );
 
-        //新api
+        //新api:新api,新版本的jar运行出错
 //        TransactionSendResult sendResult = rocketMQTemplate.sendMessageInTransaction(
 //                //这里无法指定发送的 txProducerGroup, api更新了
 //                "tx_order_topic",//主题

@@ -42,7 +42,7 @@ public class MqServiceListener implements RocketMQLocalTransactionListener {//�
             return RocketMQLocalTransactionState.COMMIT;
         } catch (Exception e) {
             e.printStackTrace();
-            return RocketMQLocalTransactionState.ROLLBACK;
+            return RocketMQLocalTransactionState.ROLLBACK;//通知rocketmq回滚事务消息
         }
     }
 

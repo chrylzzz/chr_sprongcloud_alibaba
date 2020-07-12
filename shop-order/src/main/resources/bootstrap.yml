@@ -60,6 +60,7 @@ spring:
           dashboard: localhost:8080  # 指定sentinel控制台运行jar的地址
 # 是否收敛链路流控规则,进行手动关闭收敛,默认为收敛true
 #        web-context-unify: false
+# sentinel 1.7 之后 的配置,可以直接配合关闭 ,既 spring cloud alibaba 2.1.2开始
 #spring.cloud.sentinel.web-context-unify=false#web-context-unify: false
 #        filter:
 #          enabled: false

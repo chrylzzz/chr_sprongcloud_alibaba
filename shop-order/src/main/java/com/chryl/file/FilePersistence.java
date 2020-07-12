@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * 持久化sentinel到文件中
+ * 持久化sentinel限流配置到文件中
  * <p>
  * Created by Chr.yl on 2020/6/21.
  *

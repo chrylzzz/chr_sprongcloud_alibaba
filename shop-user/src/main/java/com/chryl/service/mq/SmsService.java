@@ -46,7 +46,7 @@ public class SmsService implements RocketMQListener<ChrOrder> {
         String phone = chrUser.getPhone();
         String signName = "浪维";
         String templateCode = "SMS_193509750";
-        Param param = new Param();
+        Param param = new Param();//模板需要的参数:随机验证码
         //生成验证码
         try {
             SmsUtil.sendSms(phone, signName, templateCode, JSON.toJSONString(param));

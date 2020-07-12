@@ -24,10 +24,11 @@ public class MyTestResource {
      */
     //定义资源,value指定资源名字,注意定义资源,在sentinel-dashboard进行配置
     @SentinelResource(
-            value = "message",
+            value = "message",//资源名,既在sentinel中的标识
             /**
              * 有问题,通过测试,blockHandlerClass和fallbackClass这是引入了外部类来定义容错,而如果不写blockHandler和fallback指定方法则会找不到方法,
-             * 所以需要都写上,虽然看视频是写了外部的Class就不要写本类定义的了,但是测试并不是这样的
+             * 所以需要都写上,虽然看视频是写了外部的Class就不要写本类定义的了,但是测试并不是这样的,
+             * 应该是指定哪个外部类的哪个具体的fallback或blockHandler的方法
             */
             //本类直接定义
             blockHandler = "myBlockHandlerMethod",//自定义一个blockHandler方法,处理BlockException,注意,参数和返回值必须和定义所在的方法一样

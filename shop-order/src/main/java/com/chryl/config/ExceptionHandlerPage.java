@@ -30,6 +30,7 @@ import java.io.IOException;
 @Component
 public class ExceptionHandlerPage implements UrlBlockHandler {
 
+    //只吸收sentinel的BlockException
     @ExceptionHandler(value = BlockException.class)
     @Override
     public void blocked(HttpServletRequest request,
