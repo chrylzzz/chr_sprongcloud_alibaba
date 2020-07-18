@@ -38,15 +38,18 @@ public class MqServiceListener implements RocketMQLocalTransactionListener {//�
         try {
             //第三步:调用本地事务
             mqService.createOrder(txId, (ChrOrder) arg);
-            //第四步:没有异常,成功
-            return RocketMQLocalTransactionState.COMMIT;
+            //第四步:没有异常,成功,那么该半事务消息就会是可投递状态
+            return RocketMQLocalTransactionState.COMMIT;//第二次消息发送确认(二次确认),修改暂不能投递的状态为可有地状态
         } catch (Exception e) {
             e.printStackTrace();
-            return RocketMQLocalTransactionState.ROLLBACK;//通知rocketmq回滚事务消息
+            return RocketMQLocalTransactionState.ROLLBACK;//没有投递的状态,通知rocketmq回滚事务消息(暂时存储,三天以后删除)
         }
     }
 
-    //第五步:消息回查,如果本地事务出错,服务开启会第一时间进行回查
+    /**
+     * 理解: 这里的消息回查,是针对第二次消息确认的,如果消息一直没有收到二次确认 COMMIT 操作,那么就会执行消息回查
+     */
+    //第五步:消息回查,如果本地事务出错,服务开启会第一时间进行回查,如果启动了回查,就去从该消息里查询txLog事务日志
     @Override
     public RocketMQLocalTransactionState checkLocalTransaction(Message msg) {
         //因为本地事务,保存订单 和保存事务日志,都是同时成功或者同时失败
@@ -56,7 +59,7 @@ public class MqServiceListener implements RocketMQLocalTransactionListener {//�
         try {
             chrTxLog = txLogDao.findById(txId).get();
             if (chrTxLog != null) {
-                //本地事务成功
+                //本地事务成功,进行二次通知
                 return RocketMQLocalTransactionState.COMMIT;
             } else {
                 //失败

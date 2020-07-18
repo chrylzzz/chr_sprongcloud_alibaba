@@ -40,11 +40,16 @@ public class MqService {
         //该 id 需要 贯穿传递
         String txId = UUID.randomUUID().toString().replaceAll("-", "");
 
+        /**
+         * 理解: 为什么是半事务消息呢,因为半事务消息第一次被发送给服务端时,是不具有被投递的状态的,
+         * 他会返回给消息的发送方,消息发送方如果返回一个COMMIT操作,表示发送方收到消息发送的二次通知,表示消息被发送成功,也就是消息被投递成功,俗称可靠消息
+         * 只有返回投递成功,才具有被其他消费者消费的状态(可投递状态)
+         */
         //第一步:发送半事务消息,既能回滚的消息
         TransactionSendResult sendResult = rocketMQTemplate.sendMessageInTransaction(
                 "tx_producer_group",//txProducerGroup 事务生产者组名,与@RocketMQTransactionListener 的txProducerGroup对应
                 "tx_order_topic",//主题
-                MessageBuilder.withPayload(chrOrder).setHeader("txId", txId).build(),//Message 类型 消息
+                MessageBuilder.withPayload(chrOrder).setHeader("txId", txId).build(),//Message 类型 消息,消息类型为消息加载体和消息头信息,消息头信息写入txLog事务日志记录
                 chrOrder//参数
         );
 
@@ -55,10 +60,11 @@ public class MqService {
 //                MessageBuilder.withPayload(chrOrder).setHeader("txId", txId).build(),//Message 类型 消息
 //                chrOrder//参数
 //        );
-        if (SendStatus.SEND_OK.equals(sendResult.getSendStatus())) {
-            //第二步:发送半事务成功
+        if (SendStatus.SEND_OK.equals(sendResult.getSendStatus())) {//第一次消息发送确认,(一次确认)
+            //第二步:不代表半事务消息成功,还需要等待发送方的确认收到(COMMIT操作)
+            //事务开始....
         } else {
-            //发送失败
+            //发送失败:半事务消息投递失败
         }
     }
 

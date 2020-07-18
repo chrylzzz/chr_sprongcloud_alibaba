@@ -45,4 +45,6 @@ spring:
       alibaba:
         seata:
           tx-service-group: ${spring.application.name}  # 这里的 group 组与 srata配置里的 nacos-config.txt  相同
-
+## rocket -
+rocketmq:
+  name-server: 192.168.228.128:9876  # mq服务地址
