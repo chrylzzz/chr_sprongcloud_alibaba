@@ -1,4 +1,4 @@
-package com.chryl.filters;
+package com.chryl.filters.auth;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
