@@ -28,7 +28,7 @@ import java.util.Random;
         consumerGroup = "user-group",//消费者组名
         topic = "order-topic"//,//消费的主题
 //        consumeMode = ConsumeMode.ORDERLY,//消费模式,指定是否顺序消费: CONCURRENTLY(无序,同步消费,默认值) ;ORDERLY(顺序消费)
-//        messageModel =  MessageModel.CLUSTERING//消息模式: BROADCASTING(广播模式) ,CLUSTERING(集群模式,默认值)
+//        messageModel =  MessageModel.CLUSTERING//消费消息模式: BROADCASTING(广播模式) ,CLUSTERING(集群模式,负载均衡模式,默认值)
 )
 public class SmsService implements RocketMQListener<ChrOrder> {
 

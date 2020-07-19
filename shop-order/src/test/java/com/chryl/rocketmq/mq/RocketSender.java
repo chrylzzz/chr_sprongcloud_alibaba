@@ -7,6 +7,8 @@ import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.exception.RemotingException;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by Chr.yl on 2020/6/25.
  *
@@ -24,9 +26,13 @@ public class RocketSender {
         producer.start();
         //创建消息对象: 主题 内容 标签
         Message message = new Message("myTopic", "myTag", ("test rocket message").getBytes());
+        //设置延时登记
+        message.setDelayTimeLevel(2);
         //发送消息
         SendResult sendResult = producer.send(message, 10000);
-        System.out.println(sendResult);
+        System.out.println("发送结果:"+sendResult);
+
+        TimeUnit.SECONDS.sleep(1);
         //关闭生产者
         producer.shutdown();
     }

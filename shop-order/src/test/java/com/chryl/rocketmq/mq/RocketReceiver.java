@@ -30,7 +30,8 @@ public class RocketReceiver {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
                 //消费逻辑
-                System.out.println("message: " + list);
+                System.out.println("message---: " + list);
+                System.out.println("延迟时间:" + (System.currentTimeMillis() - list.get(0).getStoreTimestamp()));
                 //消费成功
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }

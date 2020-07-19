@@ -8,7 +8,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 测试消息类型:普通消息,顺序消息
@@ -35,7 +40,6 @@ public class MessageTypeTest {
         SendResult sendResult =
                 rocketMQTemplate.syncSend("test-topic-1:tag", "test-1-content", 10000);
         System.out.println(sendResult);
-
     }
 
     //异步,发送方发送了数据之后,通过回调来响应,接着发送下一个数据,一般使用在耗时较长的的场景
@@ -75,10 +79,32 @@ public class MessageTypeTest {
     //单项顺序消息
     @Test
     public void show4() {
-        //第三个参数,保证不重复即可,决定发送到那个队列,取hash 判断在那个队列
+        //第一个参数 topic:tag , 第二个参数 消息体
+        //第三个参数,保证不重复即可,决定发送到那个队列,取hash 判断在那个队列-多用作业务标识
         rocketMQTemplate.sendOneWayOrderly("test-topic-1:tag", "test-1-content", "xxx");
     }
 
+    //延时消息,场景:如提交订单之后发送一个延时消息,1小时候再去查看订单是否付款,未付款就释放
+    @Test
+    public void sho5() {
+        Message<String> helloMessage = MessageBuilder.withPayload("hello").build();
+//        MessageType.Delay_Msg
+        rocketMQTemplate.syncSend("test-topic-1:tag", helloMessage, 2, 3);
+
+    }
+
+    //批量发送消息,消息总长度最好不要超过4M,如果超过,最好分割
+    @Test
+    public void show6() {
+//        List<Message> messages = new ArrayList<>();
+//        Message<String> helloMessage = MessageBuilder.withPayload("hello").build();
+//        Message<String> everyMessage = MessageBuilder.withPayload("every").build();
+//        Message<String> oneMessage = MessageBuilder.withPayload("one").build();
+//        messages.add(helloMessage);
+//        messages.add(everyMessage);
+//        messages.add(oneMessage);
+//        rocketMQTemplate.send(messages);
+    }
 
 
 }
