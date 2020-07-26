@@ -45,6 +45,8 @@
          2.配置commonFilter
          -->
         <!--<spring-cloud-alibaba.version>2.1.1.RELEASE</spring-cloud-alibaba.version>-->
+        <!--<spring-cloud-alibaba.version>2.1.2.RELEASE</spring-cloud-alibaba.version>-->
+        <!--<spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>-->
     </properties>
     <dependencyManagement>
         <dependencies>
