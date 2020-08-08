@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * feign 配置了fallback seata就 不认为服务发生错误
+ * feign 配置了fallback seata就 不认为服务发生错误 !!!!!!
  * Created by Chr.yl on 2020/6/20.
  *
  * @author Chr.yl
  */
 @FeignClient(value = "service-goods"//value指定服务名称
+        //注意这里: seata和feign有冲突,feign的fallback接口,会被seata当做不是一场,不作处理!!!!!
 //        ,//如果同时设置了feign的容错类和sentinel的资源容错类,资源的被sentinel控制,接口的被feign控制,各司其职
 //        fallback = GoodsClientFallback.class//fallback为该类的容错类,但是无法得到feign调用的出错信息
 //        ,
