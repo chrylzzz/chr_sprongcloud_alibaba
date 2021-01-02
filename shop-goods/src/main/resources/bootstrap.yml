@@ -5,7 +5,7 @@ server:
 spring:
   # 配置 zipkin
   zipkin:
-    base-url: http://127.0.0.1:9411/   # zipkin server的请求地址,通过改地址推送链路数据
+    base-url: http://127.0.0.1:9411/   # zipkin server的请求地址,通过该地址推送链路数据,也可以单独创建sleuth-zipkin-server项目,将使用链路追踪的项目指向sleuth-zipkin服务的地址
     discovery-client-enabled: false   # 让 nacos 把它当成一个URL地址,而不要当成服务名
   #  配置 sleuth
   sleuth:
