@@ -1,0 +1,16 @@
+org.apache.rocketmq.client.exception.MQClientException: No route info of this topic, tx_order_topic
+
+{
+    "timestamp": "2021-04-27T07:05:16.229+0000",
+    "status": 500,
+    "error": "Internal Server Error",
+    "message": "send message Exception; nested exception is org.apache.rocketmq.client.exception.MQClientException: send message Exception\nFor more information, please visit the url, http://rocketmq.apache.org/docs/faq/",
+    "path": "/rocket/tx/get/3"
+}
+
+
+org.apache.rocketmq.remoting.exception.RemotingConnectException: connect to <[fe80:-2> failed
+
+org.apache.rocketmq.remoting.exception.RemotingConnectException: connect to <172.20.10.3:10909> failed
+
+Caused by: org.apache.rocketmq.remoting.exception.RemotingConnectException: connect to <null> failed
