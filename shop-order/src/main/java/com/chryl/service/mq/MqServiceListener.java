@@ -4,6 +4,7 @@ package com.chryl.service.mq;
 import com.chryl.dao.TxLogDao;
 import com.chryl.po.ChrOrder;
 import com.chryl.po.ChrTxLog;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionState;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
  *
  * @author Chr.yl
  */
+@Slf4j
 @Service
 @RocketMQTransactionListener(txProducerGroup = "tx_producer_group")//与sendMessageInTransaction()中的txProducerGroup对应
 //@RocketMQTransactionListener//(txProducerGroup="这里无法指定监听的哪个组,api更新了")//新api
@@ -60,13 +62,22 @@ public class MqServiceListener implements RocketMQLocalTransactionListener {//�
             chrTxLog = txLogDao.findById(txId).get();
             if (chrTxLog != null) {
                 //本地事务成功,进行二次通知
+                /**
+                 * 下单操作 , 正常流程操作
+                 */
+                log.info("回查成功 ...");
                 return RocketMQLocalTransactionState.COMMIT;
             } else {
                 //失败
+                log.info("回查出错,消息为 null ...");
                 return RocketMQLocalTransactionState.ROLLBACK;
             }
         } catch (Exception e) {
             e.printStackTrace();
+            /**
+             * 作废重新发?????
+             */
+            log.info("回查出错,不存在此条消息...");
             //失败
             return RocketMQLocalTransactionState.ROLLBACK;
         }

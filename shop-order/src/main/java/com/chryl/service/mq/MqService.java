@@ -4,6 +4,8 @@ import com.chryl.dao.OrderDao;
 import com.chryl.dao.TxLogDao;
 import com.chryl.po.ChrOrder;
 import com.chryl.po.ChrTxLog;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.producer.LocalTransactionState;
 import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.client.producer.TransactionSendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
@@ -22,6 +24,7 @@ import java.util.UUID;
  *
  * @author Chr.yl
  */
+@Slf4j
 @Service
 public class MqService {
 
@@ -62,6 +65,19 @@ public class MqService {
 //        );
         if (SendStatus.SEND_OK.equals(sendResult.getSendStatus())) {//第一次消息发送确认,(一次确认)
             //第二步:不代表半事务消息成功,还需要等待发送方的确认收到(COMMIT操作)
+            LocalTransactionState localTransactionState = sendResult.getLocalTransactionState();
+            if (LocalTransactionState.COMMIT_MESSAGE.name().equals(localTransactionState.name())) {
+                /**
+                 * 下单操作 , 正常流程操作
+                 */
+                log.info("消息可靠投递 COMMIT_MESSAGE ...");
+            } else if (LocalTransactionState.ROLLBACK_MESSAGE.name().equals(localTransactionState.name())) {
+                log.info("消息第二次 ROLLBACK_MESSAGE ...");
+            } else if (LocalTransactionState.UNKNOW.name().equals(localTransactionState.name())) {
+                log.info("消息第二次 UNKNOW ...");
+            } else {
+                log.info("消息第二次确认失败...");
+            }
             //事务开始....
         } else {
             //发送失败:半事务消息投递失败
